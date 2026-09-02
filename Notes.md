@@ -41,4 +41,14 @@ When these conventions are followed, the file automatically becomes available as
 
 ## **Nested Routes**
 ![alt text](image-2.png)
--
+- Nested routes refers to the pages located in their parent pages
+- like pages **'first'** and **'second'** (with their own *page.tsx* files) are located within the **'blog'** page [folder]
+- so the parent route is ***localhost:3000/blog***
+- while the nested (children) routes are ***localhost:3000/blog/first*** and ***localhost:3000/blog/second***
+
+## **Dynamic Routes**
+This is required when we need to create indefinte number of pages (for example, profiles, item descriptions, products), we cannot manually create folders(pages) for each one of them, so we need to create routes **dynamically** than manually
+
+- we write the folder's name in '[]' (square brackets) to signify the ***dynamic segment*** in the project
+- here, **[productId]** is the **dynamic** folder, making the url **"localhost:3000/products/:id"**
+- whether we write **':id'** as 1 or 100, i's going to show a new page with the same details, thus creating dynamic routing
