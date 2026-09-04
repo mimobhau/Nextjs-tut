@@ -49,6 +49,23 @@ When these conventions are followed, the file automatically becomes available as
 ## **Dynamic Routes**
 This is required when we need to create indefinte number of pages (for example, profiles, item descriptions, products), we cannot manually create folders(pages) for each one of them, so we need to create routes **dynamically** than manually
 
+![alt text](image-3.png)
 - we write the folder's name in '[]' (square brackets) to signify the ***dynamic segment*** in the project
 - here, **[productId]** is the **dynamic** folder, making the url **"localhost:3000/products/:id"**
 - whether we write **':id'** as 1 or 100, i's going to show a new page with the same details, thus creating dynamic routing
+
+## **Dynamic Nested Routes**
+![alt text](image-4.png)<br>
+works the same way as Nested routes and Dynamic routes **combined** together<br>
+URL - ***localhost:3000/products/1/reviews/1***
+
+## **Catch-all Segments**
+![alt text](image-5.png)
+#### Intro
+- as shown in here, if we had *20 features* and *20 concepts* for **each feature**, if we didn't use Dynamic Routing, we would have needed (20*20 =)400 seperate files
+- but using Dynamic Routing, we use a *single file* for the features and a *single file* for the concepts, making the URL - *localhost:3000/features/20/concepts/20*, which makes file handling much easier
+- but if we were to add another layer of nesting- 20 examples for each concept of each feature, it can become **complicated**
+- **catch-all segments** is used to solve the nesting problem, requiring only **1 file** to handle all the nested files/urls
+
+#### Implementation
+-
