@@ -105,3 +105,70 @@ how to know to use just a *page.tsx* file and/or a *catch-all segments* concept
     - as shown in "src/app/products/[productId]/reviews/[reviewId]/not-found.tsx
 - not-found.tsx doesn't pass any **props**
 - therefore, we use usePathname hook, which is a client-side hook and cannot be used in server components.
+
+## **File Colocation**
+- if a folder in Nextjs under the 'app' folder doesn't have a **"page.tsx"** named file, it won't become a route/path/url
+- also that "page.tsx" file should **export** a default function/return statement
+- therefore we can safely store folder/files in the main 'app' folder withour worrying about it becoming a path, as long as we don't insert a "page.tsx" file in the certain folder
+
+## **Private Folders**
+- **Private folders** are created for internal stuff, not included in *routing sytem*
+- The folder and al its subfolders are excluded from routing
+- Adding an **underscore (_)** at the start of the folder name makes it private.
+
+Private folders are super useful for the following things
+1. Keeping the UI logic seperate from routing logic
+2. Having a consistent way to organize internal files in your project
+3. Making it easier to group related files in your code editor
+4. Avoiding potential naming conflicts with future Next.js file naming conventions
+
+- *If we want an underscore(_) in the URL, use "%5F" instead. This is the URL-encoded vesrion of an underscore.*
+
+Let's have a case study on this
+- **Scenario A**
+    - folder named "_lib", url - localhost:3000/_lib
+    - output - 404, Page Not Found
+- **Scenario B**
+    - folder named "_lib", url - localhost:3000/%5Flib
+    - output - 404, Page Not Found
+- **Scenario C**
+    - folder named "%5Flib", url - localhost:3000/_lib
+    - output - You cannot view this in the browser (can view the page)
+- **Scenario D**
+    - folder named "%5Flib", url - localhost:3000/%5Flib
+    - output - 404, Page Not Found
+
+## **Route Groups**
+- **Route groups** lets us logically organize our routes and project files without impacting the URL structure
+- naming a folder in **parenthesis ()** makes it a routing group
+![alt text](image-7.png)
+- for example, in the above image, the urls/path for register, login, forgot-password are -
+   - localhost:3000/register
+   - localhost:3000/login
+   - localhost:3000/forgot-password
+
+instead of - localhost:3000/auth/register
+
+## **Layouts**
+- Pages are route-specific UI components
+- A **layout** is UI shared between multiple pages in your app (ex, header, footer, sidebar)
+
+#### How to create layouts
+- default export a React component from a layout.js or lyout.tsx file
+- that component takes a children prop, which Next.js will populate with your page content<br>
+![alt text](image-9.png)
+![alt text](image-8.png)<br>
+changes in the layout.tsx is shared by the whole site
+- whenever we open a url path, the content of the corresponding "page.tsx" file replaces the **{children} prop** in the "layout.tsx"
+
+## **Nested Layouts**
+- Next.js allows us to **nest** layouts
+![alt text](image-10.png)
+1. *localhost:3000*, root "layout.tsx" gets rendered in the app folder
+2. *localhost:3000/products*, the "page.tsx" file of the "products" folder replaces the {children} **prop** in the root layout.tsx file
+3. *localhost:3000/products/1*, the "layout.tsx" in the "products" folder becomes the {children} prop in the root layout
+    - the "layout.tsx"(ProductDetailsLayout) in the "products" folder contains the *"Featured products" line
+    - then, the "page.tsx" file of the products folder, gets rendered as the {children} prop in the productId's layout
+    - thus, we see the "page.tsx's component' rendered with the "Featured products" of the "layout.tsx"(ProductDetailsLayout), sandwiched between the 'header' and 'footer' of the root layout file
+
+## **Multiple Nested Layouts**
