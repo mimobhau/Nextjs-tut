@@ -216,3 +216,11 @@ export const metadata = {
 ![alt text](image-11.png)<br>
 as we can see the **metadata titile** of the root layout.tsx is replaced by the page.tsx one
 
+#### Dynamic Metadata
+![alt text](image-14.png)
+- it shows the "Product 187" corresponding to the URL - "http://localhost:3000/products/187"
+- in real-life applications, we can use APIs to generate seperate metadata for each dynamic page
+
+#### Key Limitattions of Metadata-
+1. we cannot use *'Metadata object'* and *'generateMetadata function'* in the same route segment, we need to use either
+2. Metadata won't work in pages marked "use client" directive
