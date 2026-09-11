@@ -224,3 +224,42 @@ as we can see the **metadata titile** of the root layout.tsx is replaced by the 
 #### Key Limitattions of Metadata-
 1. we cannot use *'Metadata object'* and *'generateMetadata function'* in the same route segment, we need to use either
 2. Metadata won't work in pages marked "use client" directive
+
+![alt text](image-16.png)<br>
+as we see, when we use **metadata** in a page with "use client"; directive, we get an error message
+
+## **Title Metadata**
+- the title field's primary purpose is ot define the document title
+- it can be either a string or an object
+
+there are three ways to describe **Metadata title** as an object
+1. **default: "",**
+    - for pages/routes that don't have their own *Metadata title*, it is replaced by the value in the default title
+    - for, default: "Next.js Tutorial -  Code with Tanveer",<br><br>
+    - output, ![alt text](image-17.png)
+2. **template: "",**
+    - for pages/routes that have their own *Metadata title*, it **appends/suffixes** the title with page's own metadata title
+    - it is mostly used for multi page applications
+    - where consistent tiny formatting is required across all the pages
+    - for, template: "%s | Code with Tanveer",<br><br>
+    - output, ![alt text](image-18.png)
+    - (the "%s" is replaced by the pages's metadata title)
+3. **absolute: "",**
+    - it is used to overwrite the parent segment's metadata title
+    - for, export const metadata: Metadata = {title: {absolute: "Blog",},}<br><br>
+    - output, ![alt text](image-19.png)
+    - (the output is the value in the **"absolute: "** field, overwriting the "template: " value in the parent segment)
+
+## **Navigation**
+- Next.js has File based routing system
+- we have defined routes for our application's root, nested, dynamic and catch-all routes
+- we have been typing URLs directly in the browser to test these routes
+- but users don't type specific URLs to naviagte, they use
+    - click on links
+    - `get redirected after certain actions
+
+### **UI Navigation**
+#### Scenario A : navigating from 'Home' page to 'Blog' page
+- for client-side navigation, Next.js gives us the **`<Link>`** component.
+- the **`<Link>`** component is a React component that extends the HTML **`<a>`** element, abd it's the primary way to navigate between routes in Next.js.
+- to use it, we will nedd to import the **next/link**.
