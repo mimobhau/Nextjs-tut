@@ -149,7 +149,7 @@ Let's have a case study on this
 
 instead of - localhost:3000/auth/register
 
-## **Layouts**
+# **Layouts**
 - Pages are route-specific UI components
 - A **layout** is UI shared between multiple pages in your app (ex, header, footer, sidebar)
 
@@ -184,7 +184,7 @@ How to make multiple nested layouts
 4. when we check the different urls from the two route groups, they have their own layout styling<br>
 this is how we create multiple different layouts for different parts of the site
 
-## **Routing Metadata**
+# **Routing Metadata**
 - The Metadata API in Next.js is a powerful feature that lets us define metadata for each page.
 - Metadata ensures our content looks great when it's shared or indexed by search engines
 - there are two ways to handle metadata in layout.tsx or page.tsx files-
@@ -250,7 +250,7 @@ there are three ways to describe **Metadata title** as an object
     - output, ![alt text](image-19.png)
     - (the output is the value in the **"absolute: "** field, overwriting the "template: " value in the parent segment)
 
-## **Navigation**
+# **Navigation**
 - Next.js has File based routing system
 - we have defined routes for our application's root, nested, dynamic and catch-all routes
 - we have been typing URLs directly in the browser to test these routes
@@ -258,8 +258,25 @@ there are three ways to describe **Metadata title** as an object
     - click on links
     - `get redirected after certain actions
 
-### **UI Navigation**
-#### Scenario A : navigating from 'Home' page to 'Blog' page
+## **UI Navigation**
+#### Scenario A : navigating from 'Home' page to 'Blog' page, & vice-versa
 - for client-side navigation, Next.js gives us the **`<Link>`** component.
 - the **`<Link>`** component is a React component that extends the HTML **`<a>`** element, abd it's the primary way to navigate between routes in Next.js.
 - to use it, we will nedd to import the **next/link**.
+
+1. **Normal Link Navigation**
+    -  `<Link href="/blog">Blog</Link>`
+2. **Dynamic Link Navigation**
+    - `<Link href="/products/1">Product 1</Link>`
+    - used for *dynamic routes* - (/products/:id)
+3. **Replace**
+    - `<Link href="/products/3" replace>Product 3</Link>`
+    - **"replace"** overrides the current history entry instead of creating a new one
+
+### **Active Links**
+![alt text](image-20.png)
+
+## **params and searchParams**
+For a given URL,
+- ***params*** is a promise that resolves to an object containing the dynamic route parameters (like id)
+- ***searchParams*** is a promise that resolves to an object containing the query parameters (like filters and sorting)

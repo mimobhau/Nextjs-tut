@@ -223,3 +223,85 @@ export const metadata: Metadata = {
 `
 - is used to overwrite the parent segment's metadata title
 - (wrote in the children component/page)
+
+## **Default Export vs Named Export**
+### export default
+- `export default function Counter() {..`
+- this is **default export**, this function is the main primary thing being exported from the file
+- a file can only have one default export
+- to import it, we do not use curly braces, we can also rename it to whatever we want when imported
+    - `import Counter from './Counter';`
+### export const
+- `export const Counter = () => {...`
+- this is **named export**, we are exporting a specific variable named *Counter*
+- we can have as many exports in a single file
+- to import it, we must use curly braces, and the name must exactly match the exported variable name
+    - `import {Counter} from './Counter';`
+
+1. `function Counter()` - traditional **Function Declaration**
+2. `const Counter = () =>` - **Arrow Function Expression**
+
+## src/app/(auth)/styles.css
+for using Tailwind CSS, we use <br>`@import "tailwindcss";`<br>
+instead of<br>
+`@tailwind base;
+@tailwind components;
+@tailwind utilities;`
+
+## src/app/(auth)/layout.tsx
+`
+"use client";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
+import "./styles.css"
+const navLinks = [
+    {name: "Register", href: "/register"},
+    {name: "Login", href: "/login"},
+    {name: "Forgot Password", href: "/forgot-password"},
+];
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  return (
+    <div>
+        {navLinks.map((link) => {
+          const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== "/");
+            return(
+                <Link className={isActive ? "font-bold mr-4" : "text-blue-500 mr-4"} href={link.href} key={link.name}>
+                    {link.name}
+                </Link>
+            );
+        })}
+        {children}
+    </div>
+  );
+}
+`
+
+#### Line3: `import {usePathname} from "next/navigation";`
+- **usePathname** - a Next.js  hook that reads the current URL path (eg, if we are on "https/localhost:3000/login", **usePathname** returns "/login")
+
+#### Line5-9: const navLinks = [ {name: "Register", href: "/register"}, ....
+- instead of hardcoding three seperate `"<Link>"`tags into the HTML, we store the data in the array, keeping the code dry and clean, and makes it easy to add more links later
+
+#### Line10-14 : `export default function AuthLayout({ children, }: { children: React.ReactNode; }) {`
+- this is a Layout component, acting as "wrappers"
+- **children** - this sprecial 'prop' represents whatever page the user is currently viewing
+- **React.ReactNode** - this is TypeScript verifying that **children** is valid React content
+
+#### Line15: `const pathname = usePathname();`
+#### Line19: `const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== "/")`
+1. Exact Match
+    - **pathanme === link.href** - Are you eactly on "/lregister"?
+2. Nested Match
+    - **pathname.startsWith(link.href)** - Are you on a sub-page, like "/register/step-2"? If so, the "Register" link should still stay highlighted.
+    - the **&& link.href !== "/"** prevents the Home link("/") from always being active, since every single URL starts with a "/"
+
+#### Line21-23: `<Link className={isActive ? "font-bold mr-4" : "text-blue-500 mr-4"} href={link.href} key={link.name}> {link.name} </Link>`
+- **className={isActive ? .... : ....}** - (Conditional Styling) this is a JS ternary operator. It says:
+    - if **"isActive"** is true, apply the "font bold" class
+    - if it is false, apply the "text-b;ue-500" class
+- **key={link.name}** - whenever we generate React elements using **".map()"**, React requires us to give each element a unique **key**. This helps React efficiently update the screen if the list changes.
