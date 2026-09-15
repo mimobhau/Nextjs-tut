@@ -280,3 +280,6 @@ there are three ways to describe **Metadata title** as an object
 For a given URL,
 - ***params*** is a promise that resolves to an object containing the dynamic route parameters (like id)
 - ***searchParams*** is a promise that resolves to an object containing the query parameters (like filters and sorting)
+- while page.tsx has access to both **params** and **searchParams**, layout.tsx only has access to **params**
+
+## **Navigating Programmatically**
