@@ -283,3 +283,67 @@ For a given URL,
 - while page.tsx has access to both **params** and **searchParams**, layout.tsx only has access to **params**
 
 ## **Navigating Programmatically**
+In **Navigating Programmatically**, instead of the user clicking on link themselves to move on to the next step in a certain sequence, the system **programmatically** takes the user to the next page/route.<br>
+For example, after adding products in the cart while shopping on Amazon, the system automatically takes you to address confirmation and then payments page.<br>
+Types of -
+- **router.push("/");** - pushes to the specifiec destination route
+- **router.replace("/");** - replaces the current route in the history stack with the new route, so the user cannot go back to the previous page using the back button.
+- **router.forward("/");** - to go to previous page
+- **router.back("/");** - to move forward in the history stack to the next page
+- **redirect("/products");** - we redirect the user to the 'products' page
+
+# **Templates**
+![alt text](image-22.png)
+![alt text](image-21.png)<br>
+- As we see in the above images, the state is preserved (input component - "Tanveer") even when the route are changed from 'Register' to 'Forgot-Password'
+- this happens, as **'Layouts'** only mount the new page content while keeping common elements (like, "Tanveer") intact
+- they don't mount shared components, leading to better performance
+Sometimes we may need the 'Layout' to create a fresh instance for each child component during navigation, this can become useful for scenarios like entry and exit animations<br><br>
+- **Templates** are similar to layouts in that they are also UI shared between multiple pages in your app
+- whenever a user navigates between routes sharing a template, we get a completely fresh new start
+    1. a new template component instance is mounted
+    2. DOM elemenst are recreated
+    3. state is cleared
+    4. effects are re-synchronized
+- create a template by exporting a default React component from a **template.tsx** or **template.js**
+- like layouts, templates need to accept a children prop to render the nested route segments
+
+After renaming 'layout.tsx' to 'template.tsx'-<br>
+![alt text](image-24.png)
+![alt text](image-23.png)<br>
+As we see in the above images, the state is not preserved (input component - "tanveer") even when the route are changed from 'Forgot-Password' to 'Register'<br><br>
+
+![alt text](image-25.png)
+- we can use both 'layout.tsx' & 'template.tsx' files togther
+- in this case, 'layout.tsx' is rendered first, then its children are replaced by 'template.tsx' components
+
+# **Loading UI**
+#### **loading.tsx**
+- this file helps us create loading states that users see while waiting for content to load in a specific route segment
+- the loading states appear instantly when navigating, letting users know that the application is responsive and actively loading content<br>
+- the **loading.tsx**  file should place in the correct folder for the route to a working *loading*
+![alt text](image-26.png)
+#### **loading.tsx Benefits**
+1. It gives users immediate feedback when they navigate somewhere new
+    - this makes the app feel snappy and responnsive, and users know their click actually did something
+2. Next.js keeps shared layouts interactive while new content loads
+    - users can still use things like navigation menus or sidebars even if the main content isn't ready yet
+
+# **Error Handling**
+#### **error.tsx**
+- to learn how to handle errors, we manually create a code to throw an error randomly
+![alt text](image-27.png)
+- this is how the error is shown in the ***dev*** mode
+- if the app was in ***production*** mode, we are shown with this message, thus, making the app inoperable
+![alt text](image-29.png)
+- to manage this, we create an **error.tsx** file to handle the errors without breaking the app, like this
+![alt text](image-28.png)
+- but **error.tsx** file is a client component, so we need to use **"use client";** <br><br>
+- it automatically wraps route segments and their nested children in a **React Error Boundary**
+- we can create custom error UIs for specific segments using the file-system hierarchy
+- it isolates errors to affected segments while keeping the rest of your app functional
+- it enables us to attempt to recover from an error without requiring a full page reload<br><br>
+## **Component Hierarchy**
+![alt text](image-30.png)
+
+# **Recovering from Errors**
