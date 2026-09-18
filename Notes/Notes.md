@@ -373,3 +373,30 @@ how to solve this?
 - it doesn't have a parent segment- how do we handle such errors?
 - Next.js provides a special file called **global-error.tsx** that goes in the root app directory
 - this is our last line of defense when something goes catastrophically wrong at the highest level of your app
+1. works only in production mode
+2. requires html and body tags to be rendered
+
+![alt text](image-35.png)<br>
+- even after adding the **"global-error.tsx"** file in the root folder, it is still not able to handle the queries
+- for that to happen, the app needs to be in *production build* and needs the global-error.tsx file to be present in `<html>` and `<body>` tags
+- after the app was build in production mode...
+![alt text](image-36.png)<br>
+
+# **Parallel Routes**
+- Parallel routing is an advanced routing mechanism that lets us render multiple pages simultaneously within the same layout
+
+#### Scenario:
+![alt text](image-37.png)<br>
+to load the different components - *"User Analytics"*, *"Revenue Metrics"*, *"Notifications"*, in the same page at the same time, traditionally we need to
+1. make three different components- *"User Analytics"*, *"Revenue Metrics"*, *"Notifications"*
+2. organize them in a layout.tsx
+3. under a 'dashboard' folder in the 'app' folder<br><br>
+***How to set up Parallel Routes***
+1. Parallel routes in Next.js are defined using a feature know as ***"slots"***
+2. Slots help organize content in a modular way
+3. to create a slot, we use the ***'@folder'*** naming conversation
+4. each defined slot automatically becomes a prop in its corresponding 'layout.tsx' file
+we require the following folder(and slot) structure
+![alt text](image-39.png)<br><br>
+if we had done this traditionally without using parallel routes, the layout.tsx file would have looked like this-
+![alt text](image-38.png)<br>
