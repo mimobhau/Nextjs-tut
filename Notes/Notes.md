@@ -347,3 +347,29 @@ As we see in the above images, the state is not preserved (input component - "ta
 ![alt text](image-30.png)
 
 # **Recovering from Errors**
+# **Handling Errors in Nested Errors**
+- Erros always bubble up to find the closest parent error boundary
+- an **error.tsx** file handles errors not just for its own folder, but for all the nested child segments below it too
+- by strategically placing **error.tsx** files at different levels in our own route folders, we can control exactly how detailed our error handling gets
+- where we put the **error.tsx** file makes a huge difference - it determines exactly which parts of our UI get affected when things go wrong
+### Scenario A: when the error.tsx file is in the nested-subfolder i.e. **src/app/products/[productId]/reviews/[reviewId]/error.tsx
+![alt text](image-31.png)<br>
+we see that the content of the "reviews" sub-folder is shown even when the error triggers
+### Scenario B: when the error.tsx file is in the parent-folder i.e. **src/app/products/error.tsx
+![alt text](image-32.png)<br>
+even though the erro occured in the "reviews" sub-folder, the error bubbles up to the 'error boundaries' in the "error.tsx" file present in the parent folder, thus replcaing the content of the "reviews" sub-folder
+
+# **Handling Errors in Layouts**
+- the error boundary won't catch errors thrown in *'layout.tsx'* within the same segment because of how the component hierarchy works
+- the layout actually sits above the error boundary in the component tree
+![alt text](image-30.png)<br><br>
+- as we see, when thers is an error in the layout file, the error.tsx file cannot handle the error due to hierachy
+![alt text](image-33.png)<br>
+how to solve this?
+- move the **error.tsx file** to the parent folder, allwoing the error.tsx file to handle such errors
+
+# **Handling Global Errors**
+- if an error boundary can't catch errors in the *layout.tsx* file from the sam esegment, what about errors in the root layout!!
+- it doesn't have a parent segment- how do we handle such errors?
+- Next.js provides a special file called **global-error.tsx** that goes in the root app directory
+- this is our last line of defense when something goes catastrophically wrong at the highest level of your app

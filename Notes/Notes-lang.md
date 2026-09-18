@@ -305,3 +305,65 @@ export default function AuthLayout({
     - if **"isActive"** is true, apply the "font bold" class
     - if it is false, apply the "text-b;ue-500" class
 - **key={link.name}** - whenever we generate React elements using **".map()"**, React requires us to give each element a unique **key**. This helps React efficiently update the screen if the list changes.
+
+## src/app/products/[productId]/reviews/[reviewId]/error.tsx
+`
+"use client";
+import {useRouter} from "next/navigation";
+import { startTransition } from "react";
+export default function ErrorBoundary({
+    error,
+    reset,
+}: {error: Error;
+    reset: () => void;
+}) {
+    const router = useRouter();
+    const reload = () => {
+        startTransition(() => {
+            router.refresh();
+            reset();
+        });
+    };
+    return (
+        <div>
+            <p>{error.message}</p>
+            <button onClick={reload}>Try again</button>
+        </div>
+    );
+}
+`
+
+#### Line2-3: `import {useRouter} from "next/navigation"; import {startTransition} from "react";`
+- importing the tools needed to recover the page
+- **useRouter** - allows programmatic navigation, like refreshing the page data
+- **startTransition** - a React feature that lets us update the UI in the background without freezing the screen
+
+#### Line4-9: `export default function ErrorBoundary({error, reset,}: {error: Error; reset: () => void;}) {`
+- Next.js automatically passes two specific props to any **error.tsx** file-
+    1. **error** - the actual JavaScript Error object that caused the crash
+    2. **reset** - built-in Next.js function that attempts to re-render the component that crashed
+#### Line10: `const router = useRouter();`
+- initializes the router instance so you can interact with Next.js' routing system
+#### Line11: `const reload = () => {`
+- defines a custom function that will run when the user clicks the "Try again" button
+#### Line12: `startTransition(() => {`
+- React's ***startTransition*** marks the code inside it as a "lower priority" background task
+- If the server takes a few seconds to fetch new data, wrapping the recovery in this function ensures the browser remains responsive and doesn't freeze while waiting
+#### Line13: `router.refresh();`
+- this tells Next.js to ping the server and re-fetch the data for the current route
+- updates the server components without losing any active client-side state (like, text typed into an input field)
+#### Line14: `reset()`
+- this triggers Next.js to re-render the specific route segment that crashed
+- combined with **router.refresh()**, we are ensuring both the server data and the UI are completely reset
+### Difference between `router.refresh();` and `reset();`
+- **router.refresh();**
+    1. **Target** - Next.js server
+    2. **What it does** - tells the server to re-fetch the data for the current page and re-render the Server Components in the background
+    3. **Key Behaviour** - does a "Soft Reload**; brings in fresh data from the database or API without reloading the whole browser or wiping out the active client-side state
+- **reset();**
+    1. **Target** - React Client
+    2. **What it does** - special function pased specififcally to *'Error Boundaries'*; clears the local error state and forces React to attempt re-rendering the component that just crashed
+    3. **Key Behaviour** - if we only call *'reset()'*, React will try to draw the UI again using the exact same data it had when it crashed
+- By placing them together inside a *startTransition*:
+    1. **router.refresh()** fetches completely new, (hopefully) fixed data from the server.
+    2. **reset()** clears the red-error screen and tells React to try drawing the component again using that fresh data.
