@@ -1,3 +1,5 @@
+import { Card } from "@/components/card";
+
 export default function RevenueMetrics() {
-    return <div>Revenue Metrics</div>
+    return <Card>Revenue Metrics</Card>
 }

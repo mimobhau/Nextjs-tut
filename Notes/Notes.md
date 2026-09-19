@@ -400,3 +400,25 @@ we require the following folder(and slot) structure
 ![alt text](image-39.png)<br><br>
 if we had done this traditionally without using parallel routes, the layout.tsx file would have looked like this-
 ![alt text](image-38.png)<br>
+- slots are not route segments/urls
+
+#### **Parallel Route Applications**
+- Dashboard with multiple sections
+- Split-view interfaces
+- Multi-pane layouts
+- Complex admin interfaces
+
+#### **Parallel Route Benefits**
+1. Parallel routes are great for splitting a layout into manageable slots (especially when different teams work on different parts)
+2. Indpendent route handling
+    - Each slot in the layout, such as 'users', 'revenue' and 'notifications' can handle its own loading and error states
+    - this **granular control** is particularly useful in scenarios where different sections of the page load at varying speeds or encounter unique errors
+    - ![alt text](image-40.png)
+    - as we see, we can have seperate loading states and error management for each seperate slot without hampering anything else on the page, allowing them to work independently
+3. Sub-navigation
+    - each slot can essentially function as a mini-application, complete with its own navigation and state management
+    - users can interact with each section seperately, applying filters, sorting data or navigating through pages without affecting to other parts
+    - ![alt text](image-41.png)
+    - we can have seperate navigation for a single slot without changing the page, without unneccessary page reloading or layout shifts
+
+## **Handling Unmatched Routes**
