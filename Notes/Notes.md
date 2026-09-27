@@ -477,3 +477,23 @@ This file is critical as it serves as a fallback to render contnet when the fram
 - ***Intercepting Page two levels above*** (f2 -> f4)<br>
 ![alt text](image-51.png)
 - ***Intercepting Page segment from the root 'app' directory*** (f2/inner-f2 -> f5)<br>
+
+## **Parallel Intercepting Routes**
+To see how the 'Parallel Intercepting Routes', we create the following demo-
+1. The main page contains an array of pictures
+2. Each picture contains the 'Picture', a 'Title', 'Photographer name' and 'Location'
+3. When a picture is clicked from the main page, the picture and the corresponding content opens in the form of a modal overlaying the main feed
+![alt text](image-56.png)
+4. When the page is refreshed, the picture and the corresponding content opens completely in a seperate page without any form of overlaying
+![alt text](image-55.png)
+
+This is the file structure and render flow-<br><br>
+![alt text](image-57.png)
+1. **app/photo-feed**- main parent folder containing the main image displaying page
+2. **app/photo-feed/page.tsx** - contains the code to display the pictures (in small) on an array
+3. **app/photo-feed/photos** - contains the photos, named according to their 'id'
+4. **app/photo-feed/[id]** - dynamic folder structure
+5. **app/photo-feed/[id]/page.tsx** - redirects the user to a complete new page having the picture and the corresponding content without any form of a overlaying
+6. **app/photo-feed/@modal** - 'slot' folder structure to implement parallel routing to show the picture and the corresponding content opens in the form of a modal overlaying the main feed
+7. **app/photo-feed/@modal/(.)[id]** - *Intercepting Route*; intercepts the destination page (*app/photo-feed/[id]/page.tsx*) to show the picture and the corresponding content opens in the form of a modal overlaying the main feed
+8. On refreshing the page, it redirects to the picture and the corresponding content opening completely in a seperate page without any form of overlaying
