@@ -25,9 +25,10 @@ export default function RootLayout({
         }}>
           <p>Header</p>
         </header>
-        <ErrorWrapper>
+        {/* <ErrorWrapper>
           {children}
-        </ErrorWrapper>
+        </ErrorWrapper> */}
+        {children}
         <footer
         style={{
           backgroundColor: "ghostwhite",

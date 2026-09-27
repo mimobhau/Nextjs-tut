@@ -422,3 +422,29 @@ if we had done this traditionally without using parallel routes, the layout.tsx 
     - we can have seperate navigation for a single slot without changing the page, without unneccessary page reloading or layout shifts
 
 ## **Handling Unmatched Routes**
+In this scenario, we see how parallel routes are used to change the *state* of a single slot without changing the whole page and its other components.<br>
+In this, we see, how we change from "Default notifcations" to "Archived Notifications"
+(/complex-dasboard => /complex-dashboard/archived)
+![alt text](image-41.png)
+- we create a seperate folder called **'archived'** under the '@notification' slot, thus acting as a seperate route
+- when we traverse to *"/complex-dashboard/archived"*, then other slots remain the same
+- ![alt text](image-43.png)
+- but, when we reload the page, since the other slots do not have any matching information to be on *"/complex-dashboard/archived"*, we get the following error
+- ![alt text](image-44.png)<br>
+
+#### **Navigation from the UI**
+When navigating through the UI (like, clicking links), Next.js keeps showing whatever was in the unmatched slots.
+#### **Page Reload**
+Next.js looks for a **'default.tsx'** file in each unmatched slot.<br>
+This file is critical as it serves as a fallback to render contnet when the framework cannot retrieve a slot's active state from the current URL.
+- as *"/complex-dashboard"* has 4 children - *'Complex Dashboard(heading)'*, *'User Analytics'*, *'Revenue Metrics'* and *'Notifications'*
+- we need to create **'default.tsx'** file for the rest three children
+- ![alt text](image-42.png)
+- after creating them, we can show default(same or different) content in the slots in *"/complex-dashboard/archived"*
+
+# **Conditional Routes**
+- 
+
+# **Intercepting Routes**
+![alt text](image-45.png)
+![alt text](image-46.png)

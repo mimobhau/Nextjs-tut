@@ -13,7 +13,6 @@ export default function ComplexDashboardLayout({
         <>
             <div>
                 {children}
-                
             </div>
             <div style={{display: "flex"}}>
                 <div style={{display: "flex", flexDirection: "column"}}>
