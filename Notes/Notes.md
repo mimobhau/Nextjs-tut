@@ -443,8 +443,37 @@ This file is critical as it serves as a fallback to render contnet when the fram
 - after creating them, we can show default(same or different) content in the slots in *"/complex-dashboard/archived"*
 
 # **Conditional Routes**
-- 
+- Imagine we want to show different content based on whether a user is loggedin in or not
+- we might want to display a dashboard for authenticated users but show a login page for those who aren't
+- condtional routes allow us to achieve this while maintaining completely seperate code on the same URL
+- we use condtional mapping to show different 'slots' as required, depending upon the condition
+- ![alt text](image-47.png)
 
 # **Intercepting Routes**
 ![alt text](image-45.png)
 ![alt text](image-46.png)
+- in the above pictures we see that, when clicking on a new route (eg, login), it opens on top of the content of the previous page
+- on refreshing, the route remains the same, just the previous background content is gone<br><br>
+
+![alt text](image-50.png)<br>
+- ***Source Page*** - contains the link to reach destination page<br>
+![alt text](image-48.png)<br>
+- ***Intercepting Page*** - intercepts the route and renders itself before 'destination' page<br>
+![alt text](image-49.png)<br>
+- ***Destination Page*** - on 'refreshing' the intercepting page, 'destination' page is rendered<br>
+
+### **Intercepting Routes Conventions**
+- to create an 'intercepting' page, we need to name it `(.){destination folder name}`
+- therefore, we need to add a suffix `(.)` to the 'destination' page name to create 'intercepting' page
+- `(.)` to match segments on the same level
+- `(..)` to match segments one level above
+- `(..)(..)` to match segments two levels above
+- `(...)` to match segments from the root 'app' directory<br>
+![alt text](image-54.png)
+- this image shows the naming convention and structure<br>
+![alt text](image-52.png)
+- ***Intercepting Page one level above*** (f1 -> f3)<br>
+![alt text](image-53.png)
+- ***Intercepting Page two levels above*** (f2 -> f4)<br>
+![alt text](image-51.png)
+- ***Intercepting Page segment from the root 'app' directory*** (f2/inner-f2 -> f5)<br>
